@@ -1,28 +1,37 @@
-import React, { Component } from "react";
+import React from "react";
 import '@blueprintjs/core/lib/css/blueprint.css';
 
 import { Button, FormGroup, InputGroup, Intent } from "@blueprintjs/core";
 
 interface Props {}
+interface State { name: string }
 
-export default class ProfileForm extends Component {
+export default class ProfileForm extends React.Component<Props, State> {
   intent: Intent = Intent.PRIMARY;
 
   constructor(props: Props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = { name: '' };
   }
 
   handleClick() {
-    // TODO
+    console.log(this.state.name)
+  }
+  
+  handleChange (e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({name: e.target.value})
   }
 
   render() {
     return (
-      <FormGroup>
-        <InputGroup id="text-input" placeholder="なまえ" />
-        <Button onClick={this.handleClick}>つくる</Button>
-      </FormGroup>
+      <div>
+        <FormGroup>
+          <InputGroup id="text-input" placeholder="なまえ" onChange={this.handleChange}/>
+          <Button onClick={this.handleClick}>つくる</Button>
+        </FormGroup>
+      </div>
     );
   }
 }
