@@ -15,18 +15,35 @@ export default class ProfileForm extends React.Component<Props, State> {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.downloadImage = this.downloadImage.bind(this);
     this.state = { name: '' };
   }
 
   handleClick() {
     const element = document.getElementById('card')
-    html2canvas(element!).then(function(canvas) {
+    html2canvas(element!).then((canvas: HTMLCanvasElement)　=> {
       document.body.appendChild(canvas);
+      this.downloadImage(canvas);
     });
   }
   
   handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({name: e.target.value})
+  }
+
+  downloadImage (canvas: HTMLCanvasElement) {
+    canvas!.toBlob((image) => {
+      const url = URL.createObjectURL(image);
+      const anchor = document.createElement("a");
+      document.getElementById('profile-image')!.appendChild(anchor);
+      anchor.download = 'プロフィール画像.png';
+      anchor.href = url;
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => {
+          URL.revokeObjectURL(url);
+      }, 1E4);
+    }, 'image/png');
   }
 
   render() {
@@ -39,6 +56,7 @@ export default class ProfileForm extends React.Component<Props, State> {
           <InputGroup id="text-input" placeholder="なまえ" onChange={this.handleChange}/>
           <Button onClick={this.handleClick}>つくる</Button>
         </FormGroup>
+        <div id="profile-image"></div>
       </div>
     );
   }
