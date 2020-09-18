@@ -1,12 +1,19 @@
 import React from "react";
 import html2canvas from 'html2canvas';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFont } from '@fortawesome/free-solid-svg-icons';
 import '@blueprintjs/core/lib/css/blueprint.css';
 
 import { Colors, Intent } from "@blueprintjs/core";
 import { Button, FormGroup, InputGroup, Card } from "@blueprintjs/core";
 
+import PreferenceSetting from "./PreferenceSetting";
+
 interface Props {}
-interface State { name: string }
+interface State { 
+  name: string,
+  fontFamily: string
+}
 
 export default class ProfileForm extends React.Component<Props, State> {
   intent: Intent = Intent.PRIMARY;
@@ -16,7 +23,7 @@ export default class ProfileForm extends React.Component<Props, State> {
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.downloadImage = this.downloadImage.bind(this);
-    this.state = { name: '' };
+    this.state = { name: '', fontFamily: '' };
   }
 
   handleClick() {
@@ -49,6 +56,7 @@ export default class ProfileForm extends React.Component<Props, State> {
   render() {
     return (
       <div>
+        <PreferenceSetting />
         <Card id="card" style={{ color: Colors.ROSE5, background: Colors.ROSE1 }}>
           <h1>わたしのなまえは<u>{this.state.name}</u>です。</h1>
         </Card>
