@@ -7,6 +7,8 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import { Colors, Intent } from "@blueprintjs/core";
 import { Button, FormGroup, InputGroup, Card } from "@blueprintjs/core";
 
+import PreferenceSetting from "./PreferenceSetting";
+
 interface Props {}
 interface State { 
   name: string,
@@ -21,7 +23,6 @@ export default class ProfileForm extends React.Component<Props, State> {
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.downloadImage = this.downloadImage.bind(this);
-    this.changeFont = this.changeFont.bind(this);
     this.state = { name: '', fontFamily: '' };
   }
 
@@ -35,12 +36,6 @@ export default class ProfileForm extends React.Component<Props, State> {
   
   handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({name: e.target.value})
-  }
-
-  changeFont () {
-    // NOTE: フォントの読み込みをフォントの変更時に行うべき？
-    this.setState({fontFamily: "'M PLUS Rounded 1c', sans-serif"});
-    document.getElementById("card")!.style.fontFamily = this.state.fontFamily; 
   }
 
   downloadImage (canvas: HTMLCanvasElement) {
@@ -61,11 +56,7 @@ export default class ProfileForm extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <div>
-          <Button onClick={this.changeFont}>
-            <FontAwesomeIcon icon={faFont} />
-          </Button>
-        </div>
+        <PreferenceSetting />
         <Card id="card" style={{ color: Colors.ROSE5, background: Colors.ROSE1 }}>
           <h1>わたしのなまえは<u>{this.state.name}</u>です。</h1>
         </Card>
